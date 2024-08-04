@@ -1,0 +1,15 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "com.pression.compressedmystconv.mixin",
+    "compatibilityLevel": "JAVA_17",
+      "refmap": "compressedmystconv.refmap.json",
+    "mixins": [
+
+    ],
+    "client": [],
+    "injectors": {
+      "defaultRequire": 1
+    }
+  }
+  
