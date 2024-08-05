@@ -124,10 +124,11 @@ repositories {
     // flatDir {
     //     dir 'libs'
     // }
-    maven { 
-        url 'https://maven.blamejared.com'
-    }
+    maven { url 'https://maven.blamejared.com' }
     maven { url 'https://maven.parchmentmc.org' }
+    maven {
+        url "https://maven.tterrag.com/"
+    }
 }
 
 mixin {
@@ -145,6 +146,9 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     implementation fg.deobf("mezz.jei:jei-1.19.2-forge-api:${version_jei}")
     implementation fg.deobf("mezz.jei:jei-1.19.2-common-api:${version_jei}")
+    implementation fg.deobf("com.simibubi.create:create-${create_minecraft_version}:${create_version}:slim") { transitive = false }
+    implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-${flywheel_minecraft_version}:${flywheel_version}")
+    implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
     // Real mod deobf dependency examples - these get remapped to your current mappings
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
     // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a runtime dependency
