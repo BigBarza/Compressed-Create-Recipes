@@ -2,8 +2,14 @@ package com.pression.compressedmystconv;
 
 import com.mojang.logging.LogUtils;
 import com.pression.compressedmystconv.recipe.CompressionRecipeTypes;
+import com.pression.compressedmystconv.recipe.RadiantConversionRecipe;
+import com.pression.compressedmystconv.recipe.VoidConversionRecipe;
+import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
@@ -21,5 +27,29 @@ public class CompressedMystConv
         CompressionRecipeTypes.RECIPE_TYPES.register(modEventBus);
         CompressionRecipeTypes.RECIPE_SERIALIZERS.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(EventHandler.class);
     }
+
+    public static class EventHandler {
+        @SubscribeEvent
+        public static void onServerStarted(ServerStartedEvent e){
+            System.out.println("Server started, wiping caches...");
+            VoidConversionRecipe.wipeCache();
+            RadiantConversionRecipe.wipeCache();
+        }
+        @SubscribeEvent
+        public static void onReloadServerResources(AddReloadListenerEvent e){
+            System.out.println("Server reloaded, wiping caches...");
+            VoidConversionRecipe.wipeCache();
+            RadiantConversionRecipe.wipeCache();
+        }
+        @SubscribeEvent
+        public static void onClientRecipesUpdated(RecipesUpdatedEvent e){
+            System.out.println("Recipes updated, wiping caches...");
+            VoidConversionRecipe.wipeCache();
+            RadiantConversionRecipe.wipeCache();
+        }
+    }
+
+
 }

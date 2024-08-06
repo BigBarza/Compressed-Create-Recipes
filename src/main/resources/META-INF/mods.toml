@@ -25,8 +25,17 @@ license="${mod_license}"
     side="BOTH"
 
 [[dependencies.${mod_id}]]
+    modId="create"
+    mandatory=true
+    versionRange="[0.5.1,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
 	modId="jei"
 	mandatory=false
 	versionRange="[11.2.0.246,)"
 	ordering="BEFORE"
 	side="CLIENT"
+
+

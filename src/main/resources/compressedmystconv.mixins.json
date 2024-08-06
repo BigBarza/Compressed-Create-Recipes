@@ -6,6 +6,7 @@
       "refmap": "compressedmystconv.refmap.json",
     "mixins": [
         "VoidConversionMixin",
+        "BeaconMixin",
         "CreateJEIMixin"
     ],
     "client": [],
