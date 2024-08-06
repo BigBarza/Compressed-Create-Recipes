@@ -14,8 +14,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
-
-// The value here should match an entry in the META-INF/mods.toml file
 @Mod(CompressedMystConv.MODID)
 public class CompressedMystConv
 {
@@ -30,6 +28,8 @@ public class CompressedMystConv
         MinecraftForge.EVENT_BUS.register(EventHandler.class);
     }
 
+    //Doing all 3 is probably overkill and won't be needed once the recipes are finalized.
+    //But it is important to wipe the caches, otherwise newly added inputs won't be recognized.
     public static class EventHandler {
         @SubscribeEvent
         public static void onServerStarted(ServerStartedEvent e){

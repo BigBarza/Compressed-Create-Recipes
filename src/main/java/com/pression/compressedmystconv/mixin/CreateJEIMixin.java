@@ -9,6 +9,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+//The list of "Mysterious Conversion" recipes in Create is hardcoded in a static field.
+//This mixin adds them to that list. This still works when reloading recipes. Somehow.
 @Mixin(MysteriousItemConversionCategory.class)
 public class CreateJEIMixin {
 

@@ -12,15 +12,12 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.client.event.RecipesUpdatedEvent;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.event.server.ServerStartedEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+//This is the recipe for chucking stuff into the void.
 public class VoidConversionRecipe implements Recipe<Inventory> {
     private final ResourceLocation id;
     private final ItemStack input;
