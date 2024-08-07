@@ -1,13 +1,12 @@
 package com.pression.compressedmystconv.recipe;
 
 import com.google.gson.JsonObject;
+import com.pression.compressedmystconv.helpers.MystConversionRecipe;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
@@ -17,24 +16,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 //This is the recipe for chucking stuff into an active beacon. Nearly identical to the void one, but with a beacon level requirement.
-public class RadiantConversionRecipe implements Recipe<Inventory> {
-    private final ResourceLocation id;
-    private final ItemStack input;
-    private final ItemStack output;
+public class RadiantConversionRecipe extends MystConversionRecipe {
     private final int minLevel;
-
     private static List<Item> inputsCache = new ArrayList<>();
 
     public RadiantConversionRecipe(ResourceLocation id, ItemStack in, ItemStack out, int minLevel){
-        this.id = id;
-        this.input = in;
-        this.output = out;
+        super(id, in, out);
         this.minLevel = minLevel;
     }
 
     @Nullable
     public static RadiantConversionRecipe getRecipe(Level level, ItemStack item, int beaconLevel){
-        if(inputsCache.isEmpty()){ //This whole cache thing is blatantly borrowed from AE2. Minimizes the logic run every time an items crosses into the beacon beam.
+        if(inputsCache.isEmpty()){ //This whole cache thing is blatantly borrowed from AE2. Reduces the logic run every time an items crosses into the beacon beam.
             List<RadiantConversionRecipe> recipes = level.getRecipeManager().getAllRecipesFor(CompressionRecipeTypes.RADIANT_CONVERSION_RECIPE_TYPE.get());
             for(RadiantConversionRecipe recipe : recipes) inputsCache.add(recipe.getInput().getItem());
         }
@@ -51,21 +44,17 @@ public class RadiantConversionRecipe implements Recipe<Inventory> {
         inputsCache = new ArrayList<>();
     }
 
-    @Override public ResourceLocation getId(){ return id; }
-    public ItemStack getInput(){ return input.copy(); }
-    public ItemStack getOutput(){ return output.copy(); }
-    public int getMinLevel(){ return minLevel; }
-    @Override public ItemStack getResultItem(){ return output; }
-    @Override public boolean matches(Inventory inv, Level world){ return false; }
-    @Override public ItemStack assemble(Inventory inv){ return ItemStack.EMPTY; }
-    @Override public boolean canCraftInDimensions(int w, int h){ return false; }
+    public int getMinLevel(){
+        return minLevel;
+    }
+
     @Override public RecipeSerializer<?> getSerializer(){
         return CompressionRecipeTypes.RADIANT_CONVERSION_SERIALIZER.get();
     }
+
     @Override public RecipeType<?> getType(){
         return CompressionRecipeTypes.RADIANT_CONVERSION_RECIPE_TYPE.get();
     }
-
 
     public static class Serializer implements RecipeSerializer<RadiantConversionRecipe>{
         @Override
@@ -89,8 +78,5 @@ public class RadiantConversionRecipe implements Recipe<Inventory> {
             buf.writeItem(recipe.getOutput());
             buf.writeInt(recipe.getMinLevel());
         }
-
     }
-
-
 }

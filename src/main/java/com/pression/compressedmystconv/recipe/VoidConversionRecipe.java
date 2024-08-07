@@ -1,6 +1,7 @@
 package com.pression.compressedmystconv.recipe;
 
 import com.google.gson.JsonObject;
+import com.pression.compressedmystconv.helpers.MystConversionRecipe;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -17,22 +18,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 //This is the recipe for chucking stuff into the void.
-public class VoidConversionRecipe implements Recipe<Inventory> {
-    private final ResourceLocation id;
-    private final ItemStack input;
-    private final ItemStack output;
+public class VoidConversionRecipe extends MystConversionRecipe {
 
     private static List<Item> inputsCache = new ArrayList<>();
 
     public VoidConversionRecipe(ResourceLocation id, ItemStack in, ItemStack out){
-        this.id = id;
-        this.input = in;
-        this.output = out;
+        super(id, in, out);
     }
 
     @Nullable
     public static VoidConversionRecipe getRecipe(Level level, ItemStack item){
-        if(inputsCache.isEmpty()){ //This whole cache thing is blatantly borrowed from AE2. Minimizes the logic run every time an items crosses into the void.
+        if(inputsCache.isEmpty()){ //This whole cache thing is blatantly borrowed from AE2. Reduces the logic run every time an items crosses into the void.
             List<VoidConversionRecipe> recipes = level.getRecipeManager().getAllRecipesFor(CompressionRecipeTypes.VOID_CONVERSION_RECIPE_TYPE.get());
             for(VoidConversionRecipe recipe : recipes) inputsCache.add(recipe.getInput().getItem());
         }
@@ -49,20 +45,13 @@ public class VoidConversionRecipe implements Recipe<Inventory> {
         inputsCache = new ArrayList<>();
     }
 
-    @Override public ResourceLocation getId(){ return id; }
-    public ItemStack getInput(){ return input.copy(); }
-    public ItemStack getOutput(){ return output.copy(); }
-    @Override public ItemStack getResultItem(){ return output; }
-    @Override public boolean matches(Inventory inv, Level world){ return false; }
-    @Override public ItemStack assemble(Inventory inv){ return ItemStack.EMPTY; }
-    @Override public boolean canCraftInDimensions(int w, int h){ return false; }
     @Override public RecipeSerializer<?> getSerializer(){
         return CompressionRecipeTypes.VOID_CONVERSION_SERIALIZER.get();
     }
+
     @Override public RecipeType<?> getType(){
         return CompressionRecipeTypes.VOID_CONVERSION_RECIPE_TYPE.get();
     }
-
 
     public static class Serializer implements RecipeSerializer<VoidConversionRecipe>{
         @Override
@@ -84,6 +73,4 @@ public class VoidConversionRecipe implements Recipe<Inventory> {
         }
 
     }
-
-
 }
