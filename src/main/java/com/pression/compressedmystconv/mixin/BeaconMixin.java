@@ -45,6 +45,7 @@ public class BeaconMixin implements IBeaconLevel {
                                 ItemEntity splitItem = new ItemEntity(level, itemPos.x, itemPos.y, itemPos.z, new ItemStack(newItem.getItem().getItem(), newItem.getItem().getMaxStackSize()));
                                 Vec3 newDelta = item.getDeltaMovement().add((Math.random()/10)-0.05,(Math.random()/10)+0.05,(Math.random()/10)-0.05); //Scramble a bit the movement of the new item, not TOO much, but always a bit upwards.
                                 splitItem.setDeltaMovement(newDelta);
+                                splitItem.setPickUpDelay(10);
                                 level.addFreshEntity(splitItem);
                             }
                         }
@@ -52,6 +53,7 @@ public class BeaconMixin implements IBeaconLevel {
                     if(!level.isClientSide()){
                         Vec3 newDelta = item.getDeltaMovement().add((Math.random()/10)-0.05,(Math.random()/10)+0.05,(Math.random()/10)-0.05); //Same as above
                         newItem.setDeltaMovement(newDelta);
+                        newItem.setPickUpDelay(10);
                         level.addFreshEntity(newItem);
                     }
                     if(item.getItem().isEmpty()) item.discard();
