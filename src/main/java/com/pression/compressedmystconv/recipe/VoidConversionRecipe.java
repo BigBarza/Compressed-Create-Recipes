@@ -12,7 +12,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
-
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +48,6 @@ public class VoidConversionRecipe implements Recipe<Inventory> {
     public static void wipeCache(){
         inputsCache = new ArrayList<>();
     }
-
-
-
 
     @Override public ResourceLocation getId(){ return id; }
     public ItemStack getInput(){ return input.copy(); }

@@ -21,32 +21,33 @@ import java.util.Optional;
 @Mixin(Entity.class)
 public class VoidConversionMixin {
 
+    //That's a method in Entity. It's called by another mini-method that checks if it's 64 blocks into the void. All it does is call discard(). Confusing, but perfect for our purposes.
     @Inject(method = "outOfWorld", at = @At("HEAD"), cancellable = true)
     private void onOutOfWorld(CallbackInfo ci){
         Entity self = (Entity) (Object) this;
         if(self instanceof ItemEntity item){
             VoidConversionRecipe recipe = VoidConversionRecipe.getRecipe(item.getLevel(), item.getItem());
-            if(recipe!=null){
+            if(recipe!=null){ //The recipe can be null if there is no recipe for that item
+                int multiplier = item.getItem().getCount() / recipe.getInput().getCount(); //This is integer division so there should be no decimals.
+                if(multiplier > 0){ //We don't abort here on a 0 multiplier, we still need to return the original item.
+                    Vec3 pos = item.position();
+                    ItemEntity newItem = new ItemEntity(item.getLevel(), pos.x, item.getLevel().getMinBuildHeight() - 10, pos.z, recipe.getOutput());
+                    newItem.getItem().setCount(0); //We're going to calculate how many times the recipe would have been processed.
+                    newItem.getItem().grow(recipe.getOutput().getCount() * multiplier);
+                    item.getItem().shrink(recipe.getInput().getCount() * multiplier);
 
-                Vec3 pos = item.position().add(Math.random()-0.5,0,Math.random()-0.5); //Randomize the position a bit, the unvoider will take care of the rest.
-                ItemEntity newItem = new ItemEntity(item.getLevel(), pos.x, item.getLevel().getMinBuildHeight() - 10, pos.z, recipe.getOutput());
-                newItem.getItem().setCount(0);
-                //TODO: Clean this up a bit and change it to do the first step in one go, then do a while to split up overloaded stacks
-                while(item.getItem().getCount() >= recipe.getInput().getCount()){
-                    newItem.getItem().grow(recipe.getOutput().getCount());
-                    item.getItem().shrink(recipe.getInput().getCount());
-                    if(newItem.getItem().getCount() > newItem.getItem().getMaxStackSize()){
+                    while(newItem.getItem().getCount() >= newItem.getItem().getMaxStackSize()){ //It's...not great to spawn in oversized stacks. Player can handle them fine, hoppers can't.
                         newItem.getItem().shrink(newItem.getItem().getMaxStackSize());
                         if(!item.getLevel().isClientSide()){
-                            ItemEntity splitItem = new ItemEntity(item.getLevel(), pos.x, item.getLevel().getMinBuildHeight() - 10, pos.z, new ItemStack(newItem.getItem().getItem(), newItem.getItem().getMaxStackSize()));
+                            ItemEntity splitItem = new ItemEntity(item.getLevel(), pos.x, pos.y, pos.z, new ItemStack(newItem.getItem().getItem(), newItem.getItem().getMaxStackSize()));
                             unVoidItem(splitItem, item.fallDistance);
-                            item.getLevel().addFreshEntity(splitItem);
+                            item.getLevel().addFreshEntity(splitItem); //Note: cannot merge this in unVoidItem, as it's used on existing items as well.
                         }
                     }
-                }
-                if(!item.getLevel().isClientSide()){
-                    unVoidItem(newItem, item.fallDistance);
-                    item.getLevel().addFreshEntity(newItem);
+                    if(!item.getLevel().isClientSide()){
+                        unVoidItem(newItem, item.fallDistance);
+                        item.getLevel().addFreshEntity(newItem);
+                    }
                 }
                 if(item.getItem().isEmpty()) item.discard();
                 else unVoidItem(item, item.fallDistance);
@@ -55,14 +56,12 @@ public class VoidConversionMixin {
                 unVoidItem(item, item.fallDistance);
                 ci.cancel();
             }
-
-
         }
     }
     //This takes an item entity, ideally into the void, and a falling distance. It searches for a hole in the bedrock and pops the item back up from 10 blocks deep.
     private void unVoidItem(ItemEntity item, float fall){ //Takes a separate value for fall distance in case of items created into the void
         Level level = item.getLevel();
-        Vec3 pos = item.position();
+        Vec3 pos = item.position().add(Math.random()-0.5,0,Math.random()-0.5); //Randomize the position a bit.
         fall = Math.max(fall, 60) - 54; //That number can be adjusted to configure how hard the item comes back up. Might bump it up to 55 if the items still end up a bit too high up.
         item.setPos(new Vec3(pos.x, level.getMinBuildHeight(), pos.z));
         AABB aabb = item.getBoundingBox().inflate(20,0,20).move(0,0.5,0);
