@@ -1,7 +1,7 @@
 {
     "required": true,
     "minVersion": "0.8",
-    "package": "com.pression.compressedmystconv.mixin",
+    "package": "com.pression.compressedcreaterecipes.mixin",
     "compatibilityLevel": "JAVA_17",
       "refmap": "compressedmystconv.refmap.json",
     "mixins": [

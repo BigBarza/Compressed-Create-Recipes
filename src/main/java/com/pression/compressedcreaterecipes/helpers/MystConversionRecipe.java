@@ -1,4 +1,4 @@
-package com.pression.compressedmystconv.helpers;
+package com.pression.compressedcreaterecipes.helpers;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;

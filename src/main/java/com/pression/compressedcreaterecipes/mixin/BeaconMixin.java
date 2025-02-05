@@ -1,7 +1,7 @@
-package com.pression.compressedmystconv.mixin;
+package com.pression.compressedcreaterecipes.mixin;
 
-import com.pression.compressedmystconv.helpers.IBeaconLevel;
-import com.pression.compressedmystconv.recipe.RadiantConversionRecipe;
+import com.pression.compressedcreaterecipes.helpers.IBeaconLevel;
+import com.pression.compressedcreaterecipes.recipe.RadiantConversionRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;

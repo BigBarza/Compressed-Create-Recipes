@@ -1,9 +1,9 @@
-package com.pression.compressedmystconv;
+package com.pression.compressedcreaterecipes;
 
 import com.mojang.logging.LogUtils;
-import com.pression.compressedmystconv.recipe.CompressionRecipeTypes;
-import com.pression.compressedmystconv.recipe.RadiantConversionRecipe;
-import com.pression.compressedmystconv.recipe.VoidConversionRecipe;
+import com.pression.compressedcreaterecipes.recipe.CompressionRecipeTypes;
+import com.pression.compressedcreaterecipes.recipe.RadiantConversionRecipe;
+import com.pression.compressedcreaterecipes.recipe.VoidConversionRecipe;
 import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
@@ -14,12 +14,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
-@Mod(CompressedMystConv.MODID)
-public class CompressedMystConv
+@Mod(CompressedCreateRecipes.MODID)
+public class CompressedCreateRecipes
 {
-    public static final String MODID = "compressedmystconv";
+    public static final String MODID = "compressed_create_recipes";
     private static final Logger LOGGER = LogUtils.getLogger();
-    public CompressedMystConv(){
+    public CompressedCreateRecipes(){
         LOGGER.info("Hexagons are the bestagons!");
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         CompressionRecipeTypes.RECIPE_TYPES.register(modEventBus);
@@ -33,19 +33,16 @@ public class CompressedMystConv
     public static class EventHandler {
         @SubscribeEvent
         public static void onServerStarted(ServerStartedEvent e){
-            System.out.println("Server started, wiping caches...");
             VoidConversionRecipe.wipeCache();
             RadiantConversionRecipe.wipeCache();
         }
         @SubscribeEvent
         public static void onReloadServerResources(AddReloadListenerEvent e){
-            System.out.println("Server reloaded, wiping caches...");
             VoidConversionRecipe.wipeCache();
             RadiantConversionRecipe.wipeCache();
         }
         @SubscribeEvent
         public static void onClientRecipesUpdated(RecipesUpdatedEvent e){
-            System.out.println("Recipes updated, wiping caches...");
             VoidConversionRecipe.wipeCache();
             RadiantConversionRecipe.wipeCache();
         }

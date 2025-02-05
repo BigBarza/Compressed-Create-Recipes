@@ -1,7 +1,7 @@
-package com.pression.compressedmystconv.mixin;
+package com.pression.compressedcreaterecipes.mixin;
 
-import com.pression.compressedmystconv.ModTags;
-import com.pression.compressedmystconv.recipe.VoidConversionRecipe;
+import com.pression.compressedcreaterecipes.ModTags;
+import com.pression.compressedcreaterecipes.recipe.VoidConversionRecipe;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;

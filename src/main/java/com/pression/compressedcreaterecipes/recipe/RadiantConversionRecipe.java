@@ -1,7 +1,7 @@
-package com.pression.compressedmystconv.recipe;
+package com.pression.compressedcreaterecipes.recipe;
 
 import com.google.gson.JsonObject;
-import com.pression.compressedmystconv.helpers.MystConversionRecipe;
+import com.pression.compressedcreaterecipes.helpers.MystConversionRecipe;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -11,6 +11,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
+
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;

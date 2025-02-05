@@ -132,8 +132,8 @@ repositories {
 }
 
 mixin {
-    add sourceSets.main, "compressedmystconv.refmap.json"
-    config "compressedmystconv.mixins.json"
+    add sourceSets.main, "compressedcreaterecipes.refmap.json"
+    config "compressedcreaterecipes.mixins.json"
 }
 
 dependencies {

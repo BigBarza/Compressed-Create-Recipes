@@ -1,6 +1,6 @@
-package com.pression.compressedmystconv.mixin;
+package com.pression.compressedcreaterecipes.mixin;
 
-import com.pression.compressedmystconv.recipe.CompressionRecipeTypes;
+import com.pression.compressedcreaterecipes.recipe.CompressionRecipeTypes;
 import com.simibubi.create.compat.jei.ConversionRecipe;
 import com.simibubi.create.compat.jei.category.MysteriousItemConversionCategory;
 import net.minecraft.client.Minecraft;
