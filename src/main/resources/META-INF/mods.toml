@@ -26,7 +26,7 @@ license="${mod_license}"
 
 [[dependencies.${mod_id}]]
     modId="create"
-    mandatory=false
+    mandatory=true
     versionRange="[0.5.1,)"
     ordering="NONE"
     side="BOTH"
