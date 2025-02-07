@@ -1,17 +1,22 @@
 {
-    "required": true,
-    "minVersion": "0.8",
-    "package": "com.pression.compressedcreaterecipes.mixin",
-    "compatibilityLevel": "JAVA_17",
-      "refmap": "compressedmystconv.refmap.json",
-    "mixins": [
-        "VoidConversionMixin",
-        "BeaconMixin",
-        "CreateJEIMixin"
-    ],
-    "client": [],
-    "injectors": {
-      "defaultRequire": 1
-    }
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.pression.compressedcreaterecipes.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "compressedcreaterecipes.refmap.json",
+  "mixins": [
+    "conversions.BeaconMixin",
+    "conversions.VoidConversionMixin",
+    "sequenced.SequencedAssemblyRecipeMixin",
+    "sequenced.SequencedAssemblySerializerMixin"
+  ],
+  "client": [
+    "conversions.ConversionCategoryMixin",
+    "sequenced.CreateJEIMixin",
+    "sequenced.SequencedAssemblyCategoryMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
   }
   

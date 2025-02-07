@@ -37,5 +37,3 @@ license="${mod_license}"
 	versionRange="[11.2.0.246,)"
 	ordering="BEFORE"
 	side="CLIENT"
-
-

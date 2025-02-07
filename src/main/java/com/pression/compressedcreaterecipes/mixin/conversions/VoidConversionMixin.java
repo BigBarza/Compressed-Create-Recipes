@@ -1,4 +1,4 @@
-package com.pression.compressedcreaterecipes.mixin;
+package com.pression.compressedcreaterecipes.mixin.conversions;
 
 import com.pression.compressedcreaterecipes.ModTags;
 import com.pression.compressedcreaterecipes.recipe.VoidConversionRecipe;

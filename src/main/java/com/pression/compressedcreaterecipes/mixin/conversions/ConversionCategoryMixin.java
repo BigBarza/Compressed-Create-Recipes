@@ -1,4 +1,4 @@
-package com.pression.compressedcreaterecipes.mixin;
+package com.pression.compressedcreaterecipes.mixin.conversions;
 
 import com.pression.compressedcreaterecipes.recipe.CompressionRecipeTypes;
 import com.simibubi.create.compat.jei.ConversionRecipe;
@@ -17,7 +17,7 @@ import java.util.List;
 //This mixin adds them to that list. This still works when reloading recipes. Somehow.
 //If Create is not there, this just throws an error once and does nothing. Which also means the recipes won't show up in jei.
 @Mixin(MysteriousItemConversionCategory.class)
-public class CreateJEIMixin {
+public class ConversionCategoryMixin {
 
     @Unique //This serves as a sort of cache for the original recipes, as we need to rebuild the list on a /reload
     private static List<ConversionRecipe> originalRecipes = new ArrayList<>();
