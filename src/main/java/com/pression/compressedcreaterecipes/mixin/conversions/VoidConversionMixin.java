@@ -24,10 +24,8 @@ public class VoidConversionMixin {
     //That's a method in Entity. It's called by another mini-method that checks if it's 64 blocks into the void. All it does is call discard(). Confusing, but perfect for our purposes.
     @Inject(method = "onBelowWorld", at = @At("HEAD"), cancellable = true)
     private void onOutOfWorld(CallbackInfo ci){
-        System.out.println("Voiding");
         Entity self = (Entity) (Object) this;
         if(self instanceof ItemEntity item){
-            System.out.println("Is an item");
             VoidConversionRecipe recipe = VoidConversionRecipe.getRecipe(item.level(), item.getItem());
             if(recipe!=null){ //The recipe can be null if there is no recipe for that item
                 int multiplier = item.getItem().getCount() / recipe.getInput().getCount(); //This is integer division so there should be no decimals.
@@ -55,7 +53,6 @@ public class VoidConversionMixin {
                 else unVoidItem(item, item.fallDistance);
                 ci.cancel();
             }else if(item.getItem().is(ModTags.VOID_PROOF_TAG)){
-                System.out.println("Is void proof");
                 unVoidItem(item, item.fallDistance);
                 ci.cancel();
             }
