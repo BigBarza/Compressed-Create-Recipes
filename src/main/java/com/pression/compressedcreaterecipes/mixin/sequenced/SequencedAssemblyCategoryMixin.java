@@ -1,14 +1,11 @@
 package com.pression.compressedcreaterecipes.mixin.sequenced;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.pression.compressedcreaterecipes.helpers.ISequencedProcessingRecipe;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.compat.jei.category.SequencedAssemblyCategory;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipe;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Lang;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotTooltipCallback;
@@ -18,6 +15,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import org.spongepowered.asm.mixin.Mixin;
@@ -39,7 +37,7 @@ public abstract class SequencedAssemblyCategoryMixin {
     //Just a tweak to let the builtin chance component support 100%
     @Inject(method = "chanceComponent", at = @At("RETURN"), remap = false, cancellable = true)
     private void tweakChanceComponent(float chance, CallbackInfoReturnable<MutableComponent> cir){
-        if(chance == 1) cir.setReturnValue(Lang.translateDirect("recipe.processing.chance", "100")
+        if(chance == 1) cir.setReturnValue(Component.translatable("create.recipe.processing.chance", "100")
                 .withStyle(ChatFormatting.GOLD));
     }
 
@@ -85,7 +83,7 @@ public abstract class SequencedAssemblyCategoryMixin {
                     .addItemStack(out.getStack())
                     .addTooltipCallback((recipeSlotView, tooltip) -> {
                         tooltip.add(1, chanceComponent(recalcChance(recipe, out.getChance())));
-                        if(!processing) tooltip.add(2, Lang.translateDirect("recipe.assembly.junk"));
+                        if(!processing) tooltip.add(2, Component.translatable("create.recipe.assembly.junk"));
                     });
             xOffset+=18;
         }
@@ -93,21 +91,22 @@ public abstract class SequencedAssemblyCategoryMixin {
 
     //This inject adds an indicator slot where the output used to be if it's a processing recipe
     //It also adds some filler text if there's nothing to display down there.
-    @Inject(method = "draw(Lcom/simibubi/create/content/processing/sequenced/SequencedAssemblyRecipe;Lmezz/jei/api/gui/ingredient/IRecipeSlotsView;Lcom/mojang/blaze3d/vertex/PoseStack;DD)V",
+    @Inject(method = "draw(Lcom/simibubi/create/content/processing/sequenced/SequencedAssemblyRecipe;Lmezz/jei/api/gui/ingredient/IRecipeSlotsView;Lnet/minecraft/client/gui/GuiGraphics;DD)V",
     at = @At("TAIL"), remap = false)
-    private void onDraw(SequencedAssemblyRecipe recipe, IRecipeSlotsView iRecipeSlotsView, PoseStack matrixStack, double mouseX, double mouseY, CallbackInfo ci){
+    private void onDraw(SequencedAssemblyRecipe recipe, IRecipeSlotsView iRecipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY, CallbackInfo ci){
         boolean processing = ((ISequencedProcessingRecipe)recipe).isProcessing();
         Font font = Minecraft.getInstance().font;
         if(processing && recipe.resultPool.size() > 1){
             //Yes, this is the ? we tricked it to not display. We want it at the normal output position to fill it in.
-            AllGuiTextures.JEI_CHANCE_SLOT.render(matrixStack, 131, 90);
-            Component component = Components.literal("?").withStyle(ChatFormatting.BOLD);
-            font.drawShadow(matrixStack, component, (float) font.width(component) / -2 + 8 + 150 - 18, 2 + 93,
-                    0xefefef);
+            AllGuiTextures.JEI_CHANCE_SLOT.render(graphics, 131, 90);
+            Component component = Component.literal("?").withStyle(ChatFormatting.BOLD);
+            graphics.drawString(font, component, font.width(component) / -2 + 8 + 150 - 18, 2 + 93, 0xefefef);
+            //font.drawShadow(graphics, component, (float) font.width(component) / -2 + 8 + 150 - 18, 2 + 93, 0xefefef);
         }
         if(recipe.resultPool.size() <= 1){ //If there's nothing to display down there, put some filler text
             Component noSideOutputs = Component.translatable("compressedcreaterecipes.jei.nosideoutputs");
-            font.draw(matrixStack, noSideOutputs, 90-((float) font.width(noSideOutputs.getString()) /2), 120, 0x888888);
+            graphics.drawString(font, noSideOutputs.getVisualOrderText(), 90-((float) font.width(noSideOutputs.getString()) /2), 120, 0x888888, false);
+            //font.draw(matrixStack, noSideOutputs, 90-((float) font.width(noSideOutputs.getString()) /2), 120, 0x888888);
         }
     }
 

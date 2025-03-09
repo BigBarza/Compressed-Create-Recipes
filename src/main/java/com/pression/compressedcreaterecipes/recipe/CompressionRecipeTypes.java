@@ -1,7 +1,6 @@
 package com.pression.compressedcreaterecipes.recipe;
 
 import com.pression.compressedcreaterecipes.CompressedCreateRecipes;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -12,7 +11,7 @@ import net.minecraftforge.registries.RegistryObject;
 //Recipe registry stuff goes here. To add new ones, just copy one and change the names.
 public class CompressionRecipeTypes {
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, CompressedCreateRecipes.MODID);
-    public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registry.RECIPE_TYPE_REGISTRY, CompressedCreateRecipes.MODID);
+    public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, CompressedCreateRecipes.MODID);
 
     //VOID CONVERSION
     public static final RegistryObject<RecipeType<VoidConversionRecipe>> VOID_CONVERSION_RECIPE_TYPE = RECIPE_TYPES.register("void_conversion",

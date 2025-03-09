@@ -1,5 +1,6 @@
 package com.pression.compressedcreaterecipes.helpers;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -40,7 +41,7 @@ public abstract class MystConversionRecipe implements Recipe<Inventory> {
     }
 
     @Override
-    public ItemStack assemble(Inventory p_44001_) {
+    public ItemStack assemble(Inventory p_44001_, RegistryAccess reg) {
         return null;
     }
 
@@ -50,7 +51,7 @@ public abstract class MystConversionRecipe implements Recipe<Inventory> {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess reg) {
         return output.copy();
     }
 
