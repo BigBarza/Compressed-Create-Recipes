@@ -36,7 +36,7 @@ public class VoidConversionMixin {
                     newItem.getItem().grow(recipe.getOutput().getCount() * multiplier);
                     item.getItem().shrink(recipe.getInput().getCount() * multiplier);
 
-                    while(newItem.getItem().getCount() >= newItem.getItem().getMaxStackSize()){ //It's...not great to spawn in oversized stacks. Player can handle them fine, hoppers can't.
+                    while(newItem.getItem().getCount() > newItem.getItem().getMaxStackSize()){ //It's...not great to spawn in oversized stacks. Player can handle them fine, hoppers can't.
                         newItem.getItem().shrink(newItem.getItem().getMaxStackSize());
                         if(!item.getLevel().isClientSide()){
                             ItemEntity splitItem = new ItemEntity(item.getLevel(), pos.x, pos.y, pos.z, new ItemStack(newItem.getItem().getItem(), newItem.getItem().getMaxStackSize()));
