@@ -1,5 +1,6 @@
 package com.pression.compressedcreaterecipes.mixin.conversions;
 
+import com.pression.compressedcreaterecipes.CommonConfig;
 import com.pression.compressedcreaterecipes.ModTags;
 import com.pression.compressedcreaterecipes.recipe.VoidConversionRecipe;
 import net.minecraft.world.entity.Entity;
@@ -60,11 +61,12 @@ public class VoidConversionMixin {
     }
     //This takes an item entity, ideally into the void, and a falling distance. It searches for a hole in the bedrock and pops the item back up from 10 blocks deep.
     private void unVoidItem(ItemEntity item, float fall){ //Takes a separate value for fall distance in case of items created into the void
+        int range = CommonConfig.UNVOID_RANGE.get();
         Level level = item.getLevel();
         Vec3 pos = item.position().add(Math.random()-0.5,0,Math.random()-0.5); //Randomize the position a bit.
         fall = Math.max(fall, 60) - 54; //That number can be adjusted to configure how hard the item comes back up. Might bump it up to 55 if the items still end up a bit too high up.
         item.setPos(new Vec3(pos.x, level.getMinBuildHeight(), pos.z));
-        AABB aabb = item.getBoundingBox().inflate(20,0,20).move(0,0.5,0);
+        AABB aabb = item.getBoundingBox().inflate(range,0,range).move(0,0.5,0);
         Optional<Vec3> freePos = level.findFreePosition(item, Shapes.create(aabb), item.position(), 0.25,0.25,0.25); //HOPEFULLY this fixes the thing where it gets stuck under bedrock
         if(!freePos.isEmpty()) item.setPos(freePos.get());
         item.setPos(item.position().add(0,-10,0)); //This is to make it so that it visually doesn't just pop up at y-64
