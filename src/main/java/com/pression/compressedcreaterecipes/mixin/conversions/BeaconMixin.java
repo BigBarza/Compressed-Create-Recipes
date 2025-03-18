@@ -1,5 +1,6 @@
 package com.pression.compressedcreaterecipes.mixin.conversions;
 
+import com.pression.compressedcreaterecipes.CommonConfig;
 import com.pression.compressedcreaterecipes.helpers.IBeaconLevel;
 import com.pression.compressedcreaterecipes.recipe.RadiantConversionRecipe;
 import net.minecraft.core.BlockPos;
@@ -16,6 +17,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
 import java.util.List;
 
 //This makes beacons scan upwards for items can be processed with radiant conversion recipes.
@@ -62,7 +64,8 @@ public class BeaconMixin implements IBeaconLevel {
 
     //Takes the new item, scrambles a bit the delta movement and spawns it in the world.
     @Unique private static void spawnItem(Level level, ItemEntity item, Vec3 deltaV){
-        Vec3 newDelta = deltaV.add((Math.random()/10)-0.05,(Math.random()/20)+0.05,(Math.random()/10)-0.05); //Scramble a bit the movement of the new item, not TOO much, but always a bit upwards. Far more noticeable with no-gravity items.
+        double deltaMult = CommonConfig.RADIANT_DELTA_MULT.get();
+        Vec3 newDelta = deltaV.add((Math.random()/10)-0.05,(Math.random()/20)+0.05,(Math.random()/10)-0.05).multiply(deltaMult, deltaMult, deltaMult);  //Scramble a bit the movement of the new item, not TOO much, but always a bit upwards. Far more noticeable with no-gravity items.
         item.setDeltaMovement(newDelta);
         item.setPickUpDelay(10); //Makes it so that it doesn't just immediately pop into the inventory if a player is close by. Bit of fiendish fun when no-gravity stuff is involved :)
         level.addFreshEntity(item);

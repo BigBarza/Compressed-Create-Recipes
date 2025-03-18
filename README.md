@@ -9,6 +9,7 @@ Currently implemented:
   - Random salvage is not random salvage anymore, but is shown in detail underneath the recipe
   - A new "isProcessing" element can be added to sequenced assembly recipe jsons.
   - Recipes marked as "processing" indicate that there is no one "main" or "correct" output and instead display all outputs together at the bottom.
+- Config options for Basin capacity and Sandpaper use speed.
 
 Disclaimer: This mod does not include Shadow Steel, Refined Radiance, Chromatic compound, or any other content related to them.
 Compression Modpack: https://www.curseforge.com/minecraft/modpacks/compression  
