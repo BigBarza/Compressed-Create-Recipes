@@ -1,6 +1,7 @@
 package com.pression.compressedcreaterecipes.mixin.sequenced;
 
 import com.pression.compressedcreaterecipes.helpers.ISequencedProcessingRecipe;
+import com.pression.compressedcreaterecipes.helpers.VersionHelper;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipe;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -22,6 +23,7 @@ public class SequencedAssemblyRecipeMixin implements ISequencedProcessingRecipe 
     @Inject(method = "getOutputChance", at = @At("HEAD")
     , remap = false, cancellable = true)
     private void spoofOutputChance(CallbackInfoReturnable<Float> cir){
+        if(!VersionHelper.enableSalvage) return;
         cir.setReturnValue(1f);
     }
 }

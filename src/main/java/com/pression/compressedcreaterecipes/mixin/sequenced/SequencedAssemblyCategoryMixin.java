@@ -1,6 +1,7 @@
 package com.pression.compressedcreaterecipes.mixin.sequenced;
 
 import com.pression.compressedcreaterecipes.helpers.ISequencedProcessingRecipe;
+import com.pression.compressedcreaterecipes.helpers.VersionHelper;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.compat.jei.category.SequencedAssemblyCategory;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
@@ -50,7 +51,7 @@ public abstract class SequencedAssemblyCategoryMixin {
     private IRecipeSlotBuilder onAddSlot(IRecipeLayoutBuilder instance, RecipeIngredientRole recipeIngredientRole, int x, int y, IRecipeLayoutBuilder builder, SequencedAssemblyRecipe recipe, IFocusGroup focuses){
         if(recipeIngredientRole == RecipeIngredientRole.OUTPUT){
             //If it's a processing recipe, move the output slot. But only if there's more than 1 output
-            if(((ISequencedProcessingRecipe)recipe).isProcessing() && recipe.resultPool.size() > 1){
+            if(((ISequencedProcessingRecipe)recipe).isProcessing() && recipe.resultPool.size() > 1 && VersionHelper.enableSalvage){
                 y = 118;
                 x = 82 - (recipe.resultPool.size()-1)*9;
             }
@@ -64,6 +65,7 @@ public abstract class SequencedAssemblyCategoryMixin {
     at = @At(value = "INVOKE", target = "Lmezz/jei/api/gui/builder/IRecipeSlotBuilder;addTooltipCallback(Lmezz/jei/api/gui/ingredient/IRecipeSlotTooltipCallback;)Lmezz/jei/api/gui/builder/IRecipeSlotBuilder;"),
     remap = false)
     private IRecipeSlotBuilder onTooltipCallback(IRecipeSlotBuilder instance, IRecipeSlotTooltipCallback iRecipeSlotTooltipCallback, IRecipeLayoutBuilder builder, SequencedAssemblyRecipe recipe, IFocusGroup focuses){
+        //Unsure how to cancel this in case. Deemed not worth it as it won't break anything else.
         return instance.addTooltipCallback((recipeSlotView, tooltip) -> {
             tooltip.add(1, chanceComponent(recalcChance(recipe, recipe.resultPool.get(0).getChance())));
         });
@@ -73,6 +75,7 @@ public abstract class SequencedAssemblyCategoryMixin {
     @Inject(method = "setRecipe(Lmezz/jei/api/gui/builder/IRecipeLayoutBuilder;Lcom/simibubi/create/content/processing/sequenced/SequencedAssemblyRecipe;Lmezz/jei/api/recipe/IFocusGroup;)V",
     at = @At("TAIL"), remap = false)
     private void addOtherOutputs(IRecipeLayoutBuilder builder, SequencedAssemblyRecipe recipe, IFocusGroup focuses, CallbackInfo ci){
+        if(!VersionHelper.enableSalvage) return;
         boolean processing = ((ISequencedProcessingRecipe)recipe).isProcessing();
 
         int xOffset = 82 - (recipe.resultPool.size()-1)*9 + (processing ? 18 : 9);
@@ -94,6 +97,7 @@ public abstract class SequencedAssemblyCategoryMixin {
     @Inject(method = "draw(Lcom/simibubi/create/content/processing/sequenced/SequencedAssemblyRecipe;Lmezz/jei/api/gui/ingredient/IRecipeSlotsView;Lnet/minecraft/client/gui/GuiGraphics;DD)V",
     at = @At("TAIL"), remap = false)
     private void onDraw(SequencedAssemblyRecipe recipe, IRecipeSlotsView iRecipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY, CallbackInfo ci){
+        if(!VersionHelper.enableSalvage) return;
         boolean processing = ((ISequencedProcessingRecipe)recipe).isProcessing();
         Font font = Minecraft.getInstance().font;
         if(processing && recipe.resultPool.size() > 1){
@@ -113,6 +117,7 @@ public abstract class SequencedAssemblyCategoryMixin {
     @Inject(method = "getTooltipStrings(Lcom/simibubi/create/content/processing/sequenced/SequencedAssemblyRecipe;Lmezz/jei/api/gui/ingredient/IRecipeSlotsView;DD)Ljava/util/List;",
     at = @At("HEAD"), remap = false, cancellable = true)
     private void addProcessingTooltip(SequencedAssemblyRecipe recipe, IRecipeSlotsView iRecipeSlotsView, double mouseX, double mouseY, CallbackInfoReturnable<List<Component>> cir){
+        if(!VersionHelper.enableSalvage) return;
         List<Component> tooltip = new ArrayList<>();
         boolean processing = ((ISequencedProcessingRecipe)recipe).isProcessing();
 

@@ -22,6 +22,7 @@ public abstract class CreateJEIMixin {
             index = 1
     )
     private int modifyEmptyBackground(int height){
+        if(!VersionHelper.enableSalvage) return height;
         int categoryPos = (VersionHelper.isV6) ? 22 : 23;
         // I hate this. I hate this so much.
         // We can't access the category builder at ALL. Best i can do is this.
