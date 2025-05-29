@@ -10,11 +10,13 @@
     "misc.BasinCapacityMixin",
     "misc.BasinRecipeMixin",
     "misc.SandpaperSpeedMixin",
+    "ponder.PonderSceneMixin",
     "sequenced.SequencedAssemblyRecipeMixin",
     "sequenced.SequencedAssemblySerializerMixin"
   ],
   "client": [
     "conversions.ConversionCategoryMixin",
+    "ponder.XPOrbRendererMixin",
     "sequenced.CreateJEIMixin",
     "sequenced.SequencedAssemblyCategoryMixin"
   ],
