@@ -1,4 +1,4 @@
-package com.pression.compressedcreaterecipes.mixin.misc;
+package com.pression.compressedcreaterecipes.mixin.basin;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import com.simibubi.create.content.processing.basin.BasinRecipe;

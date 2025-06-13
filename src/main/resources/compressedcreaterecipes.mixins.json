@@ -5,10 +5,11 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "compressedcreaterecipes.refmap.json",
   "mixins": [
+    "basin.BasinCapacityMixin",
+    "basin.BasinInventoryMixin",
+    "basin.BasinRecipeMixin",
     "conversions.BeaconMixin",
     "conversions.VoidConversionMixin",
-    "misc.BasinCapacityMixin",
-    "misc.BasinRecipeMixin",
     "misc.SandpaperSpeedMixin",
     "ponder.PonderSceneMixin",
     "sequenced.SequencedAssemblyRecipeMixin",
