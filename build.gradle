@@ -127,7 +127,8 @@ repositories {
     maven { url 'https://maven.blamejared.com' }
     maven { url 'https://maven.parchmentmc.org' }
     maven {
-        url "https://maven.tterrag.com/"
+        name "Modmaven"
+        url "https://modmaven.dev/"
     }
 }
 

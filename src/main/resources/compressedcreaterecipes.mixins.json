@@ -9,6 +9,7 @@
     "basin.BasinInventoryMixin",
     "basin.BasinRecipeMixin",
     "conversions.BeaconMixin",
+    "conversions.ConversionRecipeIdMixin",
     "conversions.VoidConversionMixin",
     "misc.SandpaperSpeedMixin",
     "ponder.PonderSceneMixin",
