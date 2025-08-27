@@ -49,6 +49,9 @@ public abstract class ConversionCategoryMixin implements IRecipeCategory<Convers
         Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(CompressionRecipeTypes.RADIANT_CONVERSION_RECIPE_TYPE.get()).forEach(recipe -> {
             MysteriousItemConversionCategory.RECIPES.add(ConversionRecipe.create(recipe.getInput(), recipe.getOutput()));
         });
+        Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(CompressionRecipeTypes.DUMMY_CONVERSION_RECIPE_TYPE.get()).forEach(recipe -> {
+            MysteriousItemConversionCategory.RECIPES.add(ConversionRecipe.create(recipe.getInput(), recipe.getOutput()));
+        });
     }
 
     @Override
@@ -56,8 +59,8 @@ public abstract class ConversionCategoryMixin implements IRecipeCategory<Convers
         List<Component> tooltips = new ArrayList<>();
         if(mouseX < 44 || mouseX > 115) return tooltips; //bounds checking
         int index = 1;
-        while (index < 10) { //hopefully no one does tooltips longer than this.
-            String tooltipID = CompressedCreateRecipes.MODID+".jei.conversion."+recipe.getId().getPath()+"_line"+index;
+        while (true) { //please don't break.
+            String tooltipID = CompressedCreateRecipes.MODID+".jei."+recipe.getId().getPath()+".line"+index;
             if(!I18n.exists(tooltipID)) break;
             else {
                 tooltips.add(Component.translatable(tooltipID));

@@ -34,5 +34,16 @@ public class CompressionRecipeTypes {
             });
     public static final RegistryObject<RecipeSerializer<RadiantConversionRecipe>> RADIANT_CONVERSION_SERIALIZER = RECIPE_SERIALIZERS.register("radiant_conversion", RadiantConversionRecipe.Serializer::new);
 
+    //DUMMY CONVERSION
+    public static final RegistryObject<RecipeType<DummyConversionRecipe>> DUMMY_CONVERSION_RECIPE_TYPE = RECIPE_TYPES.register("dummy_conversion",
+            () -> new RecipeType<DummyConversionRecipe>() {
+                @Override
+                public String toString() {
+                    return new ResourceLocation(CompressedCreateRecipes.MODID, "dummy_conversion").toString();
+                }
+            });
+    public static final RegistryObject<RecipeSerializer<DummyConversionRecipe>> DUMMY_CONVERSION_SERIALIZER = RECIPE_SERIALIZERS.register("dummy_conversion", DummyConversionRecipe.Serializer::new);
+
+
 
 }
