@@ -33,10 +33,10 @@ public abstract class FillingOutputMixin {
 
     @Inject(method = "whenItemHeld", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/kinetics/belt/behaviour/TransportedItemStackHandlerBehaviour;handleProcessingOnItem(Lcom/simibubi/create/content/kinetics/belt/transport/TransportedItemStack;Lcom/simibubi/create/content/kinetics/belt/behaviour/TransportedItemStackHandlerBehaviour$TransportedResult;)V"),
             remap = false)
-    private void addExtraOutputs(TransportedItemStack transported, TransportedItemStackHandlerBehaviour handler, CallbackInfoReturnable<BeltProcessingBehaviour.ProcessingResult> cir, @Local List<TransportedItemStack> outList, @Local(ordinal = 1) TransportedItemStack held){
-        outList.clear();
+    private void addExtraOutputs(TransportedItemStack transported, TransportedItemStackHandlerBehaviour handler, CallbackInfoReturnable<BeltProcessingBehaviour.ProcessingResult> cir, @Local List<TransportedItemStack> outList){
         if(extraOutput.isEmpty()) return;
-        TransportedItemStack holder = held.copy();
+        outList.clear();
+        TransportedItemStack holder = transported.copy();
         extraOutput.forEach(item -> {
             holder.stack = item.copy();
             outList.add(holder.getSimilar());
@@ -45,7 +45,7 @@ public abstract class FillingOutputMixin {
 
 
 
-    @Inject(method = "whenItemHeld", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/kinetics/belt/behaviour/TransportedItemStackHandlerBehaviour;handleProcessingOnItem(Lcom/simibubi/create/content/kinetics/belt/transport/TransportedItemStack;Lcom/simibubi/create/content/kinetics/belt/behaviour/TransportedItemStackHandlerBehaviour$TransportedResult;)V"), remap = false)
+    @Inject(method = "whenItemHeld", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/fluids/spout/FillingBySpout;fillItem(Lnet/minecraft/world/level/Level;ILnet/minecraft/world/item/ItemStack;Lnet/minecraftforge/fluids/FluidStack;)Lnet/minecraft/world/item/ItemStack;"), remap = false)
     private void calcExtraOutputs(TransportedItemStack transported, TransportedItemStackHandlerBehaviour handler, CallbackInfoReturnable<BeltProcessingBehaviour.ProcessingResult> cir){
         extraOutput.clear();
         RecipeWrapper WRAPPER = new RecipeWrapper(new ItemStackHandler(1));
@@ -64,6 +64,7 @@ public abstract class FillingOutputMixin {
                             }
                             return null;
                         });
+
         if(fillingRecipe != null){
             extraOutput.addAll(fillingRecipe.rollResults());
         }
