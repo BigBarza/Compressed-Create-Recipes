@@ -11,7 +11,9 @@
     "conversions.BeaconMixin",
     "conversions.ConversionRecipeIdMixin",
     "conversions.VoidConversionMixin",
+    "misc.FillingOutputMixin",
     "misc.SandpaperSpeedMixin",
+    "misc.SpoutingCategoryMixin",
     "ponder.PonderSceneMixin",
     "sequenced.SequencedAssemblyRecipeMixin",
     "sequenced.SequencedAssemblySerializerMixin"

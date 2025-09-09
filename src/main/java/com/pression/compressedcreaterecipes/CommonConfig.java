@@ -8,6 +8,7 @@ public class CommonConfig {
 
     public static final ForgeConfigSpec.ConfigValue<Integer> BASIN_CAPACITY;
     public static final ForgeConfigSpec.ConfigValue<Integer> SANDING_SPEED;
+    public static final ForgeConfigSpec.ConfigValue<Integer> RED_SANDING_SPEED;
     public static final ForgeConfigSpec.ConfigValue<Integer> UNVOID_RANGE;
     public static final ForgeConfigSpec.ConfigValue<Double> RADIANT_DELTA_MULT;
     public static final ForgeConfigSpec.ConfigValue<Integer> RADIANT_PICKUP_DELAY;
@@ -18,6 +19,8 @@ public class CommonConfig {
                 .defineInRange("Basin Capacity", 1000, 1, Integer.MAX_VALUE);
         SANDING_SPEED = BUILDER.comment("Duration of the sandpaper polishing animation in ticks. Lower values mean you polish faster. (Default: 32)")
                 .defineInRange("Sandpaper Speed", 32, 1, Integer.MAX_VALUE);
+        RED_SANDING_SPEED = BUILDER.comment("Duration of the red sandpaper polishing animation in ticks. Lower values mean you polish faster. (Default: 32)")
+                .defineInRange("Red Sandpaper Speed", 32, 1, Integer.MAX_VALUE);
         UNVOID_RANGE = BUILDER.comment("The radius in which items rising from the void will search for an available spot. Low values might get the item stuck under bedrock. High values might cause performance issues. (Default: 20)")
                 .defineInRange("Un-Voiding Radius", 20, 1, 100);
         RADIANT_DELTA_MULT = BUILDER.comment("A multiplier on the momentum applied to items created from radiant conversion (Default: 1)")
