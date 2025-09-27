@@ -106,7 +106,7 @@ public abstract class SequencedAssemblyCategoryMixin {
                     0xefefef);
         }
         if(recipe.resultPool.size() <= 1){ //If there's nothing to display down there, put some filler text
-            Component noSideOutputs = Component.translatable("compressedcreaterecipes.jei.nosideoutputs");
+            Component noSideOutputs = Component.translatable("compressed_create_recipes.jei.nosideoutputs");
             font.draw(matrixStack, noSideOutputs, 90-((float) font.width(noSideOutputs.getString()) /2), 120, 0x888888);
         }
     }
@@ -118,9 +118,9 @@ public abstract class SequencedAssemblyCategoryMixin {
         boolean processing = ((ISequencedProcessingRecipe)recipe).isProcessing();
 
         if(processing && recipe.resultPool.size() > 1 && mouseX >= 131 && mouseX < 149 && mouseY >= 90 && mouseY < 108){
-            tooltip.add(Component.translatable("compressedcreaterecipes.jei.processing_1"));
-            tooltip.add(Component.translatable("compressedcreaterecipes.jei.processing_2"));
-            tooltip.add(Component.translatable("compressedcreaterecipes.jei.processing_3"));
+            tooltip.add(Component.translatable("compressed_create_recipes.jei.processing_1"));
+            tooltip.add(Component.translatable("compressed_create_recipes.jei.processing_2"));
+            tooltip.add(Component.translatable("compressed_create_recipes.jei.processing_3"));
             cir.setReturnValue(tooltip);
         }
     }

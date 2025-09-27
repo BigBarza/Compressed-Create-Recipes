@@ -4,6 +4,10 @@ import com.mojang.logging.LogUtils;
 import com.pression.compressedcreaterecipes.recipe.CompressionRecipeTypes;
 import com.pression.compressedcreaterecipes.recipe.RadiantConversionRecipe;
 import com.pression.compressedcreaterecipes.recipe.VoidConversionRecipe;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
@@ -21,6 +25,9 @@ public class CompressedCreateRecipes
 {
     public static final String MODID = "compressed_create_recipes";
     private static final Logger LOGGER = LogUtils.getLogger();
+
+    public static final TagKey<Item> NO_3D = ItemTags.create(new ResourceLocation(CompressedCreateRecipes.MODID, "no_3d_rendering"));
+
     public CompressedCreateRecipes(){
         LOGGER.info("Hexagons are the bestagons!");
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();

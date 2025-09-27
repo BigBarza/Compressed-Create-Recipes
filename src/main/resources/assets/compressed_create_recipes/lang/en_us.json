@@ -1,0 +1,6 @@
+{
+  "compressed_create_recipes.jei.nosideoutputs": "No other outputs present",
+  "compressed_create_recipes.jei.processing_1": "This is a processing recipe",
+  "compressed_create_recipes.jei.processing_2": "There is no 'main' or 'success' output.",
+  "compressed_create_recipes.jei.processing_3": "All possible outputs are listed below."
+}

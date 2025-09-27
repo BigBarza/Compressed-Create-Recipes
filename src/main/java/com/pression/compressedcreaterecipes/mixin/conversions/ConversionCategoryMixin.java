@@ -61,7 +61,7 @@ public abstract class ConversionCategoryMixin implements IRecipeCategory<Convers
         int index = 1;
         while (true) { //please don't break.
             String tooltipID = CompressedCreateRecipes.MODID+".jei."+recipe.getId().getPath()+".line"+index;
-            if(!I18n.exists(tooltipID)) break;
+            if(!I18n.exists(tooltipID)) break; //In case it wasn't obvious, this is not what i mean by "break". This is the desired end.
             else {
                 tooltips.add(Component.translatable(tooltipID));
             }
