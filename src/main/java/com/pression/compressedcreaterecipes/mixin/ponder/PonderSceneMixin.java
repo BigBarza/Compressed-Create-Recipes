@@ -1,7 +1,7 @@
 package com.pression.compressedcreaterecipes.mixin.ponder;
 
 import com.pression.compressedcreaterecipes.helpers.IPonderScene;
-import com.simibubi.create.foundation.ponder.PonderScene;
+import net.createmod.ponder.foundation.PonderScene;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;

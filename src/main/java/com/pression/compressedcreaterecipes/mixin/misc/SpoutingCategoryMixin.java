@@ -1,6 +1,5 @@
 package com.pression.compressedcreaterecipes.mixin.misc;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.compat.jei.category.SpoutCategory;
 import com.simibubi.create.content.fluids.transfer.FillingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
@@ -11,7 +10,7 @@ import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -41,9 +40,9 @@ public class SpoutingCategoryMixin {
     }
 
     @Redirect(method = "setRecipe(Lmezz/jei/api/gui/builder/IRecipeLayoutBuilder;Lcom/simibubi/create/content/fluids/transfer/FillingRecipe;Lmezz/jei/api/recipe/IFocusGroup;)V",
-    at = @At(value = "INVOKE", target = "Lmezz/jei/api/gui/builder/IRecipeSlotBuilder;setBackground(Lmezz/jei/api/gui/drawable/IDrawable;II)Lmezz/jei/api/gui/builder/IRecipeSlotBuilder;", ordinal = 2), remap = false)
+    at = @At(value = "INVOKE", target = "Lmezz/jei/api/gui/builder/IRecipeSlotBuilder;setBackground(Lmezz/jei/api/gui/drawable/IDrawable;II)Lmezz/jei/api/gui/builder/IRecipeSlotBuilder;", ordinal = 1), remap = false)
     private IRecipeSlotBuilder setFirstBG(IRecipeSlotBuilder instance, IDrawable iDrawable, int x, int y){
-        return instance.setBackground(getRenderedSlot(capturedChance), x, y).addTooltipCallback(addStochasticTooltip(new ProcessingOutput(ItemStack.EMPTY, capturedChance)));
+        return instance.setBackground(getRenderedSlot(capturedChance), x, y).addRichTooltipCallback(addStochasticTooltip(new ProcessingOutput(ItemStack.EMPTY, capturedChance)));
     }
 
 
@@ -66,22 +65,21 @@ public class SpoutingCategoryMixin {
                     .addSlot(RecipeIngredientRole.OUTPUT, single ? 139 : 133 + xOffset, 51 + yOffset)
                     .setBackground(getRenderedSlot(output), -1, -1)
                     .addItemStack(output.getStack())
-                    .addTooltipCallback(addStochasticTooltip(output));
+                    .addRichTooltipCallback(addStochasticTooltip(output));
             i++;
         }
     }
 
-    @Redirect(method = "draw(Lcom/simibubi/create/content/fluids/transfer/FillingRecipe;Lmezz/jei/api/gui/ingredient/IRecipeSlotsView;Lcom/mojang/blaze3d/vertex/PoseStack;DD)V",
-    at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/gui/AllGuiTextures;render(Lcom/mojang/blaze3d/vertex/PoseStack;II)V", ordinal = 1), remap = false)
-    private void cancelArrow(AllGuiTextures instance, PoseStack ms, int x, int y){}
+    @Redirect(method = "draw(Lcom/simibubi/create/content/fluids/transfer/FillingRecipe;Lmezz/jei/api/gui/ingredient/IRecipeSlotsView;Lnet/minecraft/client/gui/GuiGraphics;DD)V",
+    at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/gui/AllGuiTextures;render(Lnet/minecraft/client/gui/GuiGraphics;II)V", ordinal = 1), remap = false)
+    private void cancelArrow(AllGuiTextures instance, GuiGraphics graphics, int x, int y){}
 
-    @Inject(method = "draw(Lcom/simibubi/create/content/fluids/transfer/FillingRecipe;Lmezz/jei/api/gui/ingredient/IRecipeSlotsView;Lcom/mojang/blaze3d/vertex/PoseStack;DD)V", at = @At("HEAD"), remap = false)
-    private void redrawArrow(FillingRecipe recipe, IRecipeSlotsView iRecipeSlotsView, PoseStack matrixStack, double mouseX, double mouseY, CallbackInfo ci){
+    @Inject(method = "draw(Lcom/simibubi/create/content/fluids/transfer/FillingRecipe;Lmezz/jei/api/gui/ingredient/IRecipeSlotsView;Lnet/minecraft/client/gui/GuiGraphics;DD)V", at = @At("HEAD"), remap = false)
+    private void redrawArrow(FillingRecipe recipe, IRecipeSlotsView iRecipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY, CallbackInfo ci){
          if(recipe.getRollableResults().size() >= 3){
-             AllGuiTextures.JEI_ARROW.bind();//.render(matrixStack, 100, 29);
-             GuiComponent.blit(matrixStack, 105, 29, 39, 10, 22, 10, 256,256);
+             graphics.blit(AllGuiTextures.JEI_ARROW.location, 105, 29, 39, 10, 22, 10, 256,256);
          }
-         else AllGuiTextures.JEI_DOWN_ARROW.render(matrixStack, 126, 29);
+         else AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 126, 29);
     }
 
 }

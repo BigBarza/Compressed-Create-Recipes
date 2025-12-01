@@ -1,6 +1,6 @@
 package com.pression.compressedcreaterecipes.mixin.sequenced;
 
-import com.pression.compressedcreaterecipes.helpers.VersionHelper;
+import com.pression.compressedcreaterecipes.helpers.FlagsHelper;
 import com.simibubi.create.compat.jei.CreateJEI;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -22,8 +22,8 @@ public abstract class CreateJEIMixin {
             index = 1
     )
     private int modifyEmptyBackground(int height){
-        if(!VersionHelper.enableSalvage) return height;
-        int categoryPos = (VersionHelper.isV6) ? 22 : 23;
+        if(!FlagsHelper.enableSalvage) return height;
+        int categoryPos = 22;
         // I hate this. I hate this so much.
         // We can't access the category builder at ALL. Best i can do is this.
         // Sequenced assembly is the 23rd one in the list.

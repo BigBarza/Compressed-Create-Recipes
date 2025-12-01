@@ -11,12 +11,13 @@
     "conversions.BeaconMixin",
     "conversions.ConversionRecipeIdMixin",
     "conversions.VoidConversionMixin",
+    "misc.BasinCapacityMixin",
     "misc.FillingOutputMixin",
     "misc.SandpaperSpeedMixin",
     "misc.SpoutingCategoryMixin",
     "misc.ValueBoxMixin",
     "misc.ValueBoxRenderMixin",
-    "ponder.PonderSceneMixin",
+
     "sequenced.SequencedAssemblyRecipeMixin",
     "sequenced.SequencedAssemblySerializerMixin"
   ],
@@ -24,6 +25,7 @@
     "conversions.ConversionCategoryMixin",
     "ponder.XPOrbRendererMixin",
     "sequenced.CreateJEIMixin",
+    "ponder.PonderSceneMixin",
     "sequenced.SequencedAssemblyCategoryMixin"
   ],
   "injectors": {
