@@ -30,16 +30,23 @@ public class XPOrbRendererMixin {
             // Right. I am not going to pretend to fully understand this as it would mean delving into
             // more complex modelling and rendering stuff. It's a fancier angle with a side of...imaginary numbers?
             // Some called this method a bit of a dirty hack. I don't care. It does what i need it to do.
-            Quaternionf q = new Quaternionf();
-            q.rotateXYZ(
-                    (float) Math.toRadians(camera.getXRot()),
-                    (float) Math.toRadians(camera.getYRot()),
-                    0f
-            );
+            Quaternionf q = rotationDegrees(YP, -camera.getYRot());
+            q.mul(rotationDegrees(XP, camera.getXRot()));
             //But yeah. If we're in a PonderWorld, use this camera angle instead.
             return q;
         }
         //Otherwise, use the normal one.
         return instance.cameraOrientation();
+    }
+
+    //This replicates the math i need from 1.19.2
+    private static Quaternionf rotationDegrees(Vector3f vec, float angle){
+        angle = angle * (float) Math.PI/180f;
+        float f = (float) Math.sin(angle/2);
+        double qx = vec.x() * f;
+        double qy = vec.y() * f;
+        double qz = vec.z() * f;
+        double qr = Math.cos(angle/2);
+        return new Quaternionf(qx, qy, qz, qr);
     }
 }
