@@ -17,15 +17,16 @@
     "misc.SpoutingCategoryMixin",
     "misc.ValueBoxMixin",
     "misc.ValueBoxRenderMixin",
-
     "sequenced.SequencedAssemblyRecipeMixin",
     "sequenced.SequencedAssemblySerializerMixin"
   ],
   "client": [
     "conversions.ConversionCategoryMixin",
+    "ponder.ClientLevelMixin",
+    "ponder.PonderSceneMixin",
+    "ponder.PonderScreenMixin",
     "ponder.XPOrbRendererMixin",
     "sequenced.CreateJEIMixin",
-    "ponder.PonderSceneMixin",
     "sequenced.SequencedAssemblyCategoryMixin"
   ],
   "injectors": {

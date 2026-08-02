@@ -24,7 +24,10 @@ import org.slf4j.Logger;
 public class CompressedCreateRecipes
 {
     public static final String MODID = "compressed_create_recipes";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
+
+    //This is used to spoof the game time in ponders
+    public static long SPOOFED_GAME_TIME = 0;
 
     public static final TagKey<Item> NO_3D = ItemTags.create(new ResourceLocation(CompressedCreateRecipes.MODID, "no_3d_rendering"));
 
