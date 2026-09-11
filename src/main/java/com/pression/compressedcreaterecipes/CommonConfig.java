@@ -7,6 +7,7 @@ public class CommonConfig {
     public static final ForgeConfigSpec SPEC;
 
     public static final ForgeConfigSpec.ConfigValue<Integer> BASIN_CAPACITY;
+    public static final ForgeConfigSpec.ConfigValue<Integer> BASIN_TANKS;
     public static final ForgeConfigSpec.ConfigValue<Integer> SANDING_SPEED;
     public static final ForgeConfigSpec.ConfigValue<Integer> RED_SANDING_SPEED;
     public static final ForgeConfigSpec.ConfigValue<Integer> UNVOID_RANGE;
@@ -17,6 +18,8 @@ public class CommonConfig {
         BUILDER.push("Compressed Create Recipes Config");
         BASIN_CAPACITY = BUILDER.comment("Capacity of the basin's tanks, in millibuckets. (Default: 1000)")
                 .defineInRange("Basin Capacity", 1000, 1, Integer.MAX_VALUE);
+        BASIN_TANKS = BUILDER.comment("The actual amount of internal tanks on a basin. Note: it's <amount> inputs and <amount> outputs (Default: 2)")
+                .defineInRange("Basin Tanks", 2, 1, Integer.MAX_VALUE);
         SANDING_SPEED = BUILDER.comment("Duration of the sandpaper polishing animation in ticks. Lower values mean you polish faster. (Default: 32)")
                 .defineInRange("Sandpaper Speed", 32, 1, Integer.MAX_VALUE);
         RED_SANDING_SPEED = BUILDER.comment("Duration of the red sandpaper polishing animation in ticks. Lower values mean you polish faster. (Default: 32)")

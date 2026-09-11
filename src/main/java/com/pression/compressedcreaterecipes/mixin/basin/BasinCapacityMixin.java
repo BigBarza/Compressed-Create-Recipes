@@ -18,4 +18,15 @@ public class BasinCapacityMixin {
     private int setNewCapacity(int original){
         return CommonConfig.BASIN_CAPACITY.get();
     }
+
+    @ModifyArg(
+            method = "addBehaviours",
+            remap = false,
+            at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/blockEntity/behaviour/fluid/SmartFluidTankBehaviour;<init>(Lcom/simibubi/create/foundation/blockEntity/behaviour/BehaviourType;Lcom/simibubi/create/foundation/blockEntity/SmartBlockEntity;IIZ)V"),
+            index = 2
+    )
+    private int setNewTanksAmount(int original){
+        return CommonConfig.BASIN_TANKS.get();
+    }
+
 }
